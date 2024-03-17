@@ -15,6 +15,8 @@ const 2Ee = 'E'; // 사용불가한 변수명
 let let = 'F';   // 사용불가한 변수명
 ```
 
+<br /><br />
+
 # ch05. javascript의 자료형(DataType)
 
 - 원시타입 : Number, String, boolean, null, undefined
@@ -78,3 +80,36 @@ console.log(none);
   - 변수 선언 후 값을 할당하지 않은 경우
   - 객체 속성이 존재하지 않는 경우
   - 함수의 인수가 없는 경우
+
+<br /><br />
+
+# ch06. 형 변환(Type casting)
+
+어떤 값의 타입을 다른 타입으로 변경하는 것
+
+- 묵시적 형변환
+- 명시적 형변환
+
+### 묵시적 형변환 (암묵적 형변환)
+
+개발자가 명시하지 않아도 javascript 엔진이 알아서 형 변환을 하는 것
+
+```
+let num1 = 12; // number type
+let str1 = "입니다."; // string type
+let result = num1 + str1;
+```
+
+### 명시적 형변환
+
+개발자가 내장함수등을 이용하여 직접 형 변환을 일으키는 것
+
+```
+let str = "99";
+let strToNum = Number(str);
+// console.log(strToNum);  // 99  --> number type
+
+let num = 23425;
+let numToStr = String(num);
+// console.log(numToStr + "입니다."); // 23425입니다. --> string type
+```

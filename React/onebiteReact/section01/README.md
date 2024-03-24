@@ -186,7 +186,8 @@ console.log(or, and, not); // true, false, false
 - `==` 와 `===` 의 차이
   `===` 을 사용한 경우 해당 값과 자료형까지 비교한다.
   `==` 를 사용한 경우 값만 비교하고 자료형까지 비교하지 않는다.
-  ```jsx
+
+```jsx
   console.log(1 == 1); // true
   console.log(1 == "1"); // true
   console.log(1 === "1"); // false

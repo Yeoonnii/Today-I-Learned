@@ -192,3 +192,22 @@ console.log(or, and, not); // true, false, false
   console.log(1 === "1"); // false
   console.log(1 === 1); // true
   ```
+
+<br /><br />
+
+# ch08. 연산자(Operator) 2
+
+### null 병합 연산자
+
+- `변수1 ?? 변수2` 형태로 사용한다.
+- 두 변수를 비교하여 null 또는 undefined 이 아닌 값을 반환한다.
+- 두 변수 모두 null, undefined 가 아닌 경우 첫번째 쓰인 변수를 반환한다.
+
+### typeof 연산자
+
+- `typeof + 변수` 형태로 사용하며 변수의 타입을 문자열로 반환한다.
+
+### 삼항 연산자
+
+- `조건식 ? 참인 경우의 값 : 거짓인 경우의 값` 형태로 사용된다.
+- 조건식 판별 결과에 따라 반환되는 값이 다르다.

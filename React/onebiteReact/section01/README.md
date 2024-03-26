@@ -215,7 +215,7 @@ console.log(or, and, not); // true, false, false
 
 <br /><br />
 
-# ch09. 조건문
+# ch09. 조건문 (Conditional Statement)
 
 조건문을 사용하여 코드를 작성하는 경우 특정 조건에 해당하는 경우에만 코드를 실행 할 수 있다.
 
@@ -301,3 +301,107 @@ switch(값을 판별할 변수) {
     		// 모든 case문에 해당되지 않는 경우 실행할 코드
     }
     ```
+
+<br /><br />
+
+# ch10. 반복문(Loop, Iteration)
+반복문을 사용하여 원하는 동작을 반복적으로 수행할 수 있다.
+
+```jsx
+for(초기식; 조건식; 증감식) {
+	// 반복적으로 수행할 코드를 작성한다.
+}
+```
+
+### 반복문에서 break 사용
+
+반복문 수행 중 `break` 를 만나는 경우 즉시 반복문이 중단된다.
+
+```jsx
+for(i=0; i<=10; i++){
+    console.log(i, '번째 반복중..');
+    if(i === 5){
+        console.log('break!');
+        break; // i가 5일때 반복문 중단
+    }
+}
+```
+
+### 반복문에서 continue 사용
+
+반복문 수행 중 `continue`를 만나는 경우 해당 반복문이 중지되고 다음 반복문이 실행된다.
+
+```jsx
+for(i=0; i<=5; i++){
+    if(i === 3){
+        continue;  // i가 3인 경우만 반복문 건너뜀
+    }
+    console.log(i, '번째 반복중..');
+}
+
+```
+
+## 함수
+
+특정 기능을 수행하는 코드를 묶어서 이름을 붙여 사용한다.
+
+함수를 사용하면 중복되는 코드를 줄일 수 있으며 유지보수가 편리한 장점이 있다.
+
+함수 선언
+
+```jsx
+function 함수이름() {
+	// 함수 내부에서 실행할 코드
+}
+```
+
+- 함수는 `함수이름()` 을 사용하여 호출(사용)이 가능하다.
+- 함수의 `()` 내부에 인자를 넣어 호출 할 수 있으며, 함수 선언시 매개변수 위치에 변수명을 명시하면 함수 내부에서 인자값을 사용할 수 있다.
+
+```jsx
+function gugudan(firstNum, secondNum) {
+    let result = firstNum * secondNum;
+    console.log(result);
+}
+
+gugudan(9,8);   // 72
+```
+
+- 함수는 return 값을 가질 수 있다.
+    
+    return문 이후 작성된 코드는 수행되지 않는다.
+    
+
+```jsx
+function gugudan(firstNum, secondNum) {
+    let result = firstNum * secondNum;
+    return result;
+}
+
+let resultNum = gugudan(4,8);   
+console.log(resultNum);   // 32
+```
+
+- 중첩 함수
+    
+    함수 내부에 함수를 사용할 수 있다.
+    
+
+```jsx
+function gugudan(firstNum, secondNum) {
+  let result = firstNum * secondNum;
+
+  console.log(isEven(result));
+
+  // 중첩 함수
+  function isEven(result) {
+    return result % 2 === 0;
+  }
+}
+
+gugudan(3,7);   // false
+```
+
+- 호이스팅(Hoisting)
+    
+    선언문과 호출문의 위치에 관계 없이 (자바스크립트 인터프리터가) 코드 실행시 함수를 최상단으로 끌어올려 실행해주는 기능이다.

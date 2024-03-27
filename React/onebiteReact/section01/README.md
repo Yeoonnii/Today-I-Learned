@@ -219,7 +219,7 @@ console.log(or, and, not); // true, false, false
 
 조건문을 사용하여 코드를 작성하는 경우 특정 조건에 해당하는 경우에만 코드를 실행 할 수 있다.
 
-### if 문
+## if 문
 
 다양한 조건을 판별하는 경우 사용한다.
 
@@ -254,7 +254,7 @@ if(조건식) {
     ```
     
 
-### Switch 문
+## Switch 문
 
 특정 값에 따라 조건을 수행하는 경우 Switch 문을 사용하면 코드를 직관적으로 볼 수 있다.
 
@@ -341,7 +341,9 @@ for(i=0; i<=5; i++){
 
 ```
 
-## 함수
+<br /><br />
+
+# ch11. 함수
 
 특정 기능을 수행하는 코드를 묶어서 이름을 붙여 사용한다.
 
@@ -405,3 +407,101 @@ gugudan(3,7);   // false
 - 호이스팅(Hoisting)
     
     선언문과 호출문의 위치에 관계 없이 (자바스크립트 인터프리터가) 코드 실행시 함수를 최상단으로 끌어올려 실행해주는 기능이다.
+
+<br /><br />
+
+# ch12. 함수 표현식과 화살표 함수
+## 함수 표현식
+
+- 함수 표현식으로 함수 선언
+    
+    변수에 함수를 대입한다. 변수에 담긴 함수는 값으로 취급된다.
+    
+    변수에 대입할 함수는 변수 대입시 선언해도 되고, 먼저 선언한 후에 대입해도 된다.
+    
+
+```jsx
+// a. 변수 대입시 함수 선언한 경우
+let var1 = function funcB() {
+  console.log("funcB");
+};
+
+// b. 이미 선언된 함수를 변수에 대입하는 경우
+function funcA() {
+  console.log("funcA");
+};
+let var2 = funcA;
+
+var1();     // funcA
+var2();     // funcB
+```
+
+- 변수 대입시 함수를 선언하는 경우 해당 함수는 변수명으로만 호출이 가능하다.
+    
+    (선언한 함수명으로 호출이 불가능 하다.)
+    
+
+```jsx
+let var3 = function funcC() {
+  console.log("funcC");
+};
+
+// var3();     // funcC
+// funcC();    // Uncaught ReferenceError: funcC is not defined
+```
+
+- 익명함수
+    
+    변수 대입시 함수를 선언하는 경우 함수명을 생략하여 사용하는 함수
+    
+    익명함수는 변수명으로 호출한다.
+    
+
+```jsx
+let var4 = function () {
+  console.log("Anonymous function");
+};
+
+var4();     // Anonymous function
+```
+
+- 함수 표현식에서의 호이스팅 기능
+    
+    함수가 먼저 선언된 후 변수에 담겨있다면 호이스팅이 적용되지만, 변수 대입시에 함수를 선언하는 경우 호이스팅이 불가능 하다.
+    
+
+```jsx
+// a. 선언된 함수를 변수에 대입 = 호이스팅 가능
+let var5 = hoistFuncA();    // hoistFuncA
+
+function hoistFuncA() {
+  console.log("hoistFuncA");
+};
+
+// b. 변수 대입시 함수를 선언 = 호이스팅 불가능
+hoistFuncB();   // Uncaught ReferenceError: hoistFuncB is not defined
+
+let var6 = function hoistFuncB() {
+  console.log("hoistFuncB");
+};
+```
+
+## 화살표 함수
+
+화살표 함수를 사용하면 기존보다 더 간결하게 함수를 작성할 수 있다.
+
+함수가 여러줄의 기능을 수행하지 않는 경우 화살표 함수의 중괄호를 생략할 수 있다.
+
+```jsx
+// 화살표 함수
+let arrFunc1 = () => {
+    console.log('arrFunc');
+};
+
+arrFunc1();     // arrFunc
+
+// 중괄호가 생략된 화살표 함수
+let arrFunc2 = (value) => value * 2;
+
+console.log(arrFunc2(9));   // 18
+```

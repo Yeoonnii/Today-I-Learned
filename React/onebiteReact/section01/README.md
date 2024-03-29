@@ -669,7 +669,7 @@ console.log(myPuppy);      // { age:11, color:"white", cute:true, favorite treat
 
 - 4) 객체 프로퍼티 존재 여부 확인 (in 연산자)
     
-    `'확인할 변수명' in 객체명` 형태로 사용하고 `true/false` 값을 반환받는다.
+    `'확인할 프로퍼티명' in 객체명` 형태로 사용하고 `true/false` 값을 반환받는다.
     
 
 ```jsx

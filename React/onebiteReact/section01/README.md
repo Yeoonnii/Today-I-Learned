@@ -584,3 +584,95 @@ for(let i=0; i<=4; i++){
 // 변수가 갖는 스코프의 범위 밖에서 변수를 호출하려는 경우 오류가 발생한다.
 console.log(e);     // Uncaught ReferenceError: e is not defined
 ```
+
+<br /><br />
+
+# ch15. 객체(Object) 1
+- 객체(Object)
+
+원시타입이 아닌 객체 타입
+
+여러 가지 값을 동시에 저장할 수 있다.
+
+- 객체 생성
+
+```jsx
+// new 키워드 사용
+let newObj1 = new Object();
+console.log(newObj1);
+
+// 중괄호 사용 -> 간결한 방식이어서 많이 쓰임
+let newObj2 = {};
+console.log(newObj2);
+```
+
+- 객체 프로퍼티 (객체 속성)
+    
+    중괄호 내부에 `key : value` 형태의 데이터가 존재한다.
+    
+    `key` 
+    
+    - 표기할 때는 따옴표를 사용하지 않고 `key` 값을 적어준다.
+    - `key` 값에는 문자, 숫자를 사용할 수 있다.
+    - `key` 값에 띄어쓰기가 포함되는 경우 예외적으로 `''` 를 사용하여 `key` 값을 적어준다.
+    
+    `value`
+    
+    - 원시타입, 배열, 객체, 함수 등 모든 형태의 값을 넣을 수 있다.
+
+```jsx
+let myPuppy = {
+    name    : 'bori',
+    age     : 11,
+    weight  : '2.3kg' ,
+    cute    : true,
+    'favorite treats' : 'Dental Treats',
+}
+```
+
+- 1) 객체 프로퍼티 다루는 방법
+
+```jsx
+// a. 점 표기법
+console.log(myPuppy.name);      // bori
+
+// b. 괄호 표기법
+console.log(myPuppy['cute']);   // true
+```
+
+- 2) 객체 프로퍼티 추가, 수정
+    
+    점 표기법과 괄호 표기법을 사용하여 객체 프로퍼티 추가, 수정 가능
+    
+
+```jsx
+// 객체 프로퍼티 추가
+myPuppy.color = 'white';
+myPuppy['microchipped'] = true;
+console.log(myPuppy);      // { age:11, color:"white", cute:true, favorite treats:"Dental Treats", microchipped:true, name:"bori", weight:"2.3kg"}
+
+// 객체 프로퍼티 수정
+myPuppy.weight = '2.5kg';
+myPuppy["favorite treats"] = 'Puppy Biscuits';
+console.log(myPuppy);      // { age:11, color:"white", cute:true, favorite treats:"Puppy Biscuits", microchipped:true, name:"bori", weight:"2.5kg"}
+```
+
+- 3) 객체 프로퍼티 삭제 (delete 키워드)
+    
+    `delete 객체명.프로퍼티명` 형태로 프로퍼티를 삭제한다.
+    
+
+```jsx
+delete myPuppy.weight;
+console.log(myPuppy);      // { age:11, color:"white", cute:true, favorite treats:"Puppy Biscuits", microchipped:true, name:"bori"}
+```
+
+- 4) 객체 프로퍼티 존재 여부 확인 (in 연산자)
+    
+    `'확인할 변수명' in 객체명` 형태로 사용하고 `true/false` 값을 반환받는다.
+    
+
+```jsx
+let result = 'age' in myPuppy;
+console.log(result);        // true
+```

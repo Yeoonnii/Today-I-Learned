@@ -676,3 +676,40 @@ console.log(myPuppy);      // { age:11, color:"white", cute:true, favorite treat
 let result = 'age' in myPuppy;
 console.log(result);        // true
 ```
+
+<br /><br />
+
+# ch16. 객체(Object) 2
+- 상수 객체
+
+상수로 선언된 객체는 새로운 객체나 다른 객체로 바꿀 수 없다.
+
+상수로 선언된 객체 내부의 프로퍼티 추가, 수정, 삭제는 가능하다
+
+- 메서드
+
+객체 내부에 선언된 함수 = 객체 프로퍼티 값이 함수인것
+
+메서드는 프로퍼티를 꺼내 쓰는 방식과 동일하게 점 표기법, 괄호표기법으로 사용할 수 있다.
+
+메서드는 **익명함수, 화살표 함수, 메서드 선언** 방식으로 생성할 수 있다.
+
+```jsx
+// 메서드 : 객체 프로퍼티 값이 함수인 것
+const person = {
+    name: '김철수',
+    age: 22,
+    // 메서드 값에 익명함수 사용하기
+    sayHi: function(){
+        console.log('안녕하세요!');
+    },
+    // 메서드 값에 화살표 함수 사용하기
+    sayBye: () => {
+        console.log('안녕히계세요~');
+    },
+    // 메서드 선언하기
+    askName() {
+        console.log('이름이 뭐에요?');
+    }
+}
+```

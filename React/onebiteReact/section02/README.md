@@ -172,7 +172,7 @@ getName2(person);
 <br /><br />
 
 # ch04. Spread 연산자와 Rest 매개변수
-### Spread 연산자
+## Spread 연산자
 
 객체나 배열에 저장된 데이터를 개별 값으로 흩뿌려준다.
 
@@ -182,7 +182,7 @@ getName2(person);
 
 `Uncaught TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function`
 
-### Rest 매개변수
+## Rest 매개변수
 
 Rest = 나머지 라는 뜻이다.
 

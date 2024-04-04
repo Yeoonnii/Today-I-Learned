@@ -168,3 +168,50 @@ function getName2({name, age, hobby, extra}) {
 }
 getName2(person);
 ```
+
+<br /><br />
+
+# ch04. Spread 연산자와 Rest 매개변수
+### Spread 연산자
+
+객체나 배열에 저장된 데이터를 개별 값으로 흩뿌려준다.
+
+- 배열1을 배열2의 중간에 포함하거나, 객체1의 프로퍼티 중간에 객체2의 프로퍼티를 포함할 수 있다.
+- 함수 호출시 배열에 저장된 값을 풀어서 전달 할 수 있다.
+- 함수 호출시 객체에 저장된 값에 Spread 연산자를 사용하는 경우 오류가 발생한다.
+
+`Uncaught TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function`
+
+### Rest 매개변수
+
+Rest = 나머지 라는 뜻이다.
+
+즉, 여러개의 개별 데이터를 Rest 매개변수로 받는 경우 배열에 담아서 받을 수 있다.
+
+- 여러개의 개별 데이터를 Rest 매개변수로 받아올 때 Rest 매개변수를 사용하기 전, 원하는 만큼의 여러개 개별데이터를 배열에 담지 않고 받아올 수도 있다.
+
+```jsx
+// 여러개의 데이터를 매개변수로 받아올 때 
+// 첫번째, 두번째 매개변수는 개별데이터로, 나머지 매개변수는 배열에 받기
+function func3(firstFavorite, secondFavorite,  ...others) {
+    console.log(firstFavorite);     // 딸기
+    console.log(secondFavorite);    // 사과
+    console.log(others);            // ['토마토', '체리']
+}
+func3('딸기', '사과', '토마토', '체리');
+```
+
+- Rest 매개변수를 사용 후 다른 변수명을 개별로 받아오려 하는 경우 오류가 발생한다.
+
+`Rest parameter must be last formal parameter` 
+
+⇒ Rest 매개변수 사용 전에만 데이터를 개별로 받아올 수 있다.
+
+ 
+
+```jsx
+// function func4(top1, ...others, top2) {     // Rest parameter must be last formal parameter
+//      console.log(firstFavorite);
+// }
+// func4('강아지', '고양이', '햄스터', '금붕어');
+```

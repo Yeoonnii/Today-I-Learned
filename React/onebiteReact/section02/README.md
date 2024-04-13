@@ -519,3 +519,33 @@ console.log(newStrArr2);   // hello*im*yeoonnii
 let newStrArr3 = strArr.join('');
 console.log(newStrArr3);  // helloimyeoonnii
 ```
+
+<br /><br />
+
+# ch10. Date 객체와 날짜
+## 1. Date 객체 생성하기
+
+- `new` 생성자 사용하여 객체 생성
+    - `new Date()` 사용시 현재 시간을 가져온다.
+    - `new Date("2024-01-23")` 또는 `new Date("2024-01-23 01:01:23")` 와 같이 날짜나 시간을 직접 지정하여 객체를 생성하는것도 가능하다.<br />
+
+## 2. 타임스탬프
+
+- 특정 시간이 `1970.01.01 00시 00분 00초(=UTC)` 로부터 몇 ms가 지났는지를 의미하는 숫자값
+- 복잡한 시간 정보를 숫자로 나타낼 수 있기 때문에 연산시 자주 사용된다.
+- `Date`객체에 `.getTime()` 메서드를 사용하면 타임스탬프 값(ex. 1705939283000) 을 반환한다.
+- `new Date(타임스탬프 값)` → 타임스탬프 값을 매개변수로 넣어 Date 객체 생성시 타임스탬프값을 Date 객체로 변환 후 반환해준다.<br />
+
+## 3. 시간요소(날짜,시간) 추출
+
+- `get~` 으로 시작하는 메서드를 사용하여 Date 객체의 시간요소를 추출 할 수 있다.
+- `getMonth()` 메서드로 month 값 추출시 반환하는 month 값은 index 값과 같게 취급하기 때문에 1을 추가해주어야 한다.<br />
+
+## 4. 시간요소(날짜,시간) 수정
+
+- `set~` 으로 시작하는 메서드를 사용하여 Date 객체의 시간요소를 수정할 수 있다.
+- `setMonth()` 메서드로 month 값 수정시 매개변수의 month 값은 index 값과 같게 취급하기 때문에 1을 빼주어야 한다.<br />
+
+## 5. Date 객체를 여러 포맷으로 출력하기
+
+- `toDateString()` , `toTimeString()` , `toLocaleDateString()` , `toLocaleTimeString()` 을 사용하여 다양한 포맷으로 시간요소 출력이 가능하다.<br />

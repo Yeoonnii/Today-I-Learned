@@ -636,6 +636,7 @@ indent(= 들여쓰기)가 깊어지는 형태의 코드로 진화하게 된다.
 비동기 작업을 효율적으로 처리할 수 있도록 도와주는 자바스크립트의 내장 객체이다.
 
 비동기 작업들을 래핑하여(감싸서) 비동기 작업을 하는데 필요한 다양한 기능을 제공해준다.
+<img src="img/13.png" title="Promise 객체">
 
 ## Promise의 3가지 상태
 
@@ -649,6 +650,7 @@ indent(= 들여쓰기)가 깊어지는 형태의 코드로 진화하게 된다.
 
 - 해결 (resolve) : 대기 (Pending) → 성공 (Fulfilled) 으로 상태가 변화한 것
 - 거부 (reject) : 대기 (Pending) → 실패 (Rejected) 으로 상태가 변화한 것
+<img src="img/14.png" title="Promise의 3가지 상태">
 
 ## Promise 객체 생성/활용
 

@@ -761,3 +761,49 @@ add10(2)
     console.log(error);
   });
 ```
+
+<br /><br />
+
+# ch13. 비동기 작업 처리하기 3. Async/Await
+## async 키워드
+
+- 어떤 함수에 `async` 키워드를 사용하면 해당 함수를 비동기 함수로 만들어준다.
+- `async` 키워드를 함수에 사용하면 Promise를 사용하지 않는 함수더라도 Promise를 반환하도록 변환해준다.
+- 함수에 이미 return 값이 존재하는 경우 해당 return 값을 PromiseResult로 갖는 Promise 객체가 반환된다.
+
+```jsx
+async function getData1() {
+    return {
+        name: "김영희",
+        age: "20"
+    }
+}
+
+// 함수에서 Promise를 사용하지 않는경우 
+// 기존재 하는 return 값을 PromiseResult로 갖는 Promise 객체가 반환된다.
+console.log(getData1());
+		// [[Prototype]]: Promise
+		// [[PromiseState]]: "fulfilled"
+		// [[PromiseResult]]: Object
+		//     age: "20"
+		//     name: "김영희"
+		// [[Prototype]]:Object
+```
+
+## await 키워드
+
+- 비동기 함수가 다 처리되기를 기다리는 역할을 한다.
+- `async` 키워드를 사용한 함수 내부에서만 사용 가능하며 `async` 키워드 없이 단독으로 사용이 불가하다.
+- `await` 키워드는 promise 가 종료되길 기다린 후 PromiseResult를 반환한다.
+    
+    → `await` 키워드를 사용시 promise의 `.then()` 메서드를 사용하여 PromiseResult에 접근하지 않아도 된다.
+    
+
+```jsx
+async function printData() {
+    const data = await getData1();
+    console.log(data);
+}
+
+printData();    // {name: '김영희', age: '20'}
+```

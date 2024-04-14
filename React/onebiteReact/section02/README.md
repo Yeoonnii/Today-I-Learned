@@ -1,4 +1,4 @@
-## ch02 목차
+## 📌section02 목차
 [1. Truthy 와 Falsy](#ch01-truthy-와-falsy)<br />
 [2. 단락 평가 (Short-circuit Evaluation)](#ch02-단락-평가-short-circuit-evaluation)<br />
 [3. 구조 분해 할당](#ch03-구조-분해-할당)<br />

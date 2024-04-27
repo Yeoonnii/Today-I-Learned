@@ -1,16 +1,24 @@
 ## 📌section03 목차
-[1. Node.js 기초](#01.-node.js-기초)<br />
+
+### Node.js 기초
+[Node.js](##-node.js)<br />
+[NPM(Node Package Manager)](##-npm(node-package-manager))<br />
+[모듈(Module)](##-모듈(module))<br />
+[모듈 시스템(Module System)](##-모듈-시스템(module-system))<br />
+[패키지(Package)](##-패키지(package))<br />
+[라이브러리(Library)](##-라이브러리(library))<br />
 
 <hr />
 
-# 01. Node.js 기초
-## Node.js란?
+# Node.js 기초
 
-웹 브라우저가 아닌 환경에서도 JavaScript를 실행시켜주는 **JavaScript 실행환경(Run Time)**이다.
+## Node.js
 
-*** 실행환경(Run Time) = 구동기**
+웹 브라우저가 아닌 환경에서도 JavaScript를 실행시켜주는 **JavaScript 실행환경(Run Time)** 이다.
 
-## NPM(Node Package Manager)란?
+**실행환경(Run Time) = 구동기**
+
+## NPM(Node Package Manager)
 
 Node.js의 패키지 단위를 관리하는 도구
 
@@ -18,18 +26,19 @@ Node.js의 패키지 단위를 관리하는 도구
 
 Node.js 설치시 npm이 함께 설치된다.
 
-## 모듈(Module) 이란?
+## 모듈(Module)
 
 기능별로 나누어진 각각의 파일
 
-## 모듈 시스템(Module System)이란?
+## 모듈 시스템(Module System)
 
 모듈을 생성하고, 불러오고 사용하는 등의 모듈을 다루는 다양한 기능을 제공하는 시스템
 
 ## 자바스크립트의 모듈 시스템
+
 <img src="img/01.png" title="자바스크립트의 모듈 시스템">
 
-*** Common JS 모듈 시스템과 ES 모듈 시스템은 동시에 사용할 수 없다.**
+**Common JS 모듈 시스템과 ES 모듈 시스템은 동시에 사용할 수 없다.**
 
 ### 1. CJS (Common JS 모듈 시스템) 사용하기
 
@@ -40,24 +49,24 @@ Node.js 설치시 npm이 함께 설치된다.
 ```jsx
 // math.js
 function add(a, b) {
-    return a + b;
-};
+  return a + b;
+}
 
 function sub(a, b) {
-    return a - b;
+  return a - b;
 }
 
 module.exports = {
-    add: add,
-    sub: sub
-}
+  add: add,
+  sub: sub,
+};
 ```
 
 1-2. require를 이용하여 모듈의 경로를 인수로 전달하여 반환받아 사용이 가능하다.
 
 ```jsx
 // index.js
-const { add, sub } = require('./math.js') ;
+const { add, sub } = require("./math.js");
 ```
 
 ### 2. ESM (ES 모듈 시스템) 사용하기
@@ -72,17 +81,18 @@ const { add, sub } = require('./math.js') ;
 // math.js
 // 2-2.
 export {
-// add : add, sub: sub // --> 내보낼 key 값과 value 값이 동일한 경우 생략하여 사용가능하다.
-    add, sub
-}
+  // add : add, sub: sub // --> 내보낼 key 값과 value 값이 동일한 경우 생략하여 사용가능하다.
+  add,
+  sub,
+};
 
 // 2-3.
 export function add(a, b) {
-    return a + b;
-};
+  return a + b;
+}
 
 export function sub(a, b) {
-    return a - b;
+  return a - b;
 }
 ```
 
@@ -93,7 +103,7 @@ export function sub(a, b) {
 // import { add, sub } from './math.js'
 ```
 
- 2-5. 하나의 모듈을 대표하는 default 값을 내보낼 수도 있다.
+2-5. 하나의 모듈을 대표하는 default 값을 내보낼 수도 있다.
 
 export default 키워드가 붙은 함수는 math 모듈을 대표하는 기본값이 된다.
 
@@ -102,7 +112,7 @@ export default 키워드가 붙은 함수는 math 모듈을 대표하는 기본�
 ```jsx
 // math.js
 export default function multiply(a, b) {
-    return a * b;
+  return a * b;
 }
 
 // index.js
@@ -116,7 +126,7 @@ import multiply from "./math.js";
 import multiply, { add, sub } from "./math.js";
 ```
 
-## 패키지란?
+## 패키지(Package)
 
 프로젝트 : 프로그래밍에서 특정 목적을 갖는 프로그램의 단위 (쇼핑몰 프로젝트, 웹 프로젝트 등)
 
@@ -147,7 +157,7 @@ package.json 내부에 존재하는 `“scripts”` 항목안에 있으며 특�
 
 `"start": "node index.js"` 추가 후 터미널에 `npm run start` 명령어를 입력하면 `"start"` 에 입력된 `node index.js` 명령이 실행된다.
 
-## 라이브러리란?
+## 라이브러리(Library)
 
 프로그램을 개발할 때 필요한 다양한 기능들을 미리 만들어 모듈화 해 놓은 것
 
@@ -168,17 +178,14 @@ https://www.npmjs.com/ ⇒ node.js 라이브러리 설치시 참고
 ```
 
 - node_modules 폴더가 생성 되고 폴더 하위에 패키지명 폴더가 생성된다.
-    
-    패키지명 폴더 하위에는 해당 라이브러리 파일이 저장되어 있다.
-    
-    * `node_modules` : 패키지에 실제 설치된 라이브러리의 저장소
-    
+  패키지명 폴더 하위에는 해당 라이브러리 파일이 저장되어 있다.
+  - `node_modules` : 패키지에 실제 설치된 라이브러리의 저장소
 - package-lock.json 파일이 생성된다.
-    - 패키지가 사용하고 있는 라이브러리의 버전이나 정보를 정확하고 엄밀하게 저장한다.
+  - 패키지가 사용하고 있는 라이브러리의 버전이나 정보를 정확하고 엄밀하게 저장한다.
 
 ### package.json 과 package-lock.json 의 차이
 
 - package.json : 대략적인 라이브러리의 정보를 저장
-    - Version Range (버전 범위) : package.json에 명시된 라이브러리의 버전 정보 앞에 표시된 `^` 기호
-    - 정확한 버전이 아니라 대략적인 버전을 표기한 것을 의미한다.
+  - Version Range (버전 범위) : package.json에 명시된 라이브러리의 버전 정보 앞에 표시된 `^` 기호
+  - 정확한 버전이 아니라 대략적인 버전을 표기한 것을 의미한다.
 - package-lock.json : package.json 보다 정확하고 상세한 라이브러리의 정보를 저장

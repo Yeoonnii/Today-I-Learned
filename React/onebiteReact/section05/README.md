@@ -435,7 +435,7 @@ React에서 발생하는 이벤트들은 이벤트 핸들러의 함수를 호출
 
 ### SyntheticBaseEvent (합성 이벤트 객체)
 
-다양한 브라우저(사파리, 크롬, 엣지, ...)를 여러 업체(Apple, Google, Naver, ...)에서 제공하다보니 동작하는 방식이 다른 경우가 있어 **`Cross Browsing Issue`**가 발생한다.
+다양한 브라우저(사파리, 크롬, 엣지, ...)를 여러 업체(Apple, Google, Naver, ...)에서 제공하다보니 동작하는 방식이 다른 경우가 있어 `Cross Browsing Issue`가 발생한다.
 
 `React`에서는 이러한 `Cross Browsing Issue`를 쉽게 해결해 주기 위해 `Synthetic Event`(합성 이벤트)를 제공한다.
 

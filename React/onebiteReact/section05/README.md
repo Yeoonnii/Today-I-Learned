@@ -1,5 +1,39 @@
 # React.js 입문
 
+## ch01. React App 생성하기
+
+### Vite로 React 프로젝트 생성하기
+
+1. React 프로젝트 생성
+
+```jsx
+npm create vite@latest
+```
+
+2. package.json 라이브러리 설치
+
+```jsx
+npm install 혹은 npm i
+```
+
+3. 기본 생성되는 .eslintrc.cjs 파일에 추가 설정을 해준다.
+
+```jsx
+...
+  rules: {
+	  ...
+    "no-unused-vars": "off", // 코드에서 실제로 사용하지 않는 변수가 있을 때 오류를 발생시키는 옵션
+    "react/prop-types": "off", // React를 안정적으로 사용하기 위한 옵션
+...
+```
+
+4. .gitignore 파일에 git에 업로드할 파일을 명시한다.
+
+```jsx
+# Ignore the .gitignore file itself
+.gitignore
+```
+
 ### VSCode Extension - ESlint 설치
 
 ESLint는 자바스크립트 코드에서 발견되는 문제시되는 패턴들을 식별하기 위한 정적 코드 분석 도구이다.

@@ -375,3 +375,72 @@ const Button = ({text, color = "black", a = 0, b = 0, c = 0, children = null}) =
 }
 ...
 ```
+<br><br>
+
+## ch05. 이벤트 처리하기
+### 이벤트 핸들링 (Event Handling)
+
+웹에서 이벤트가 발생했을 때 사용자의 행동을 처리해주는것 (ex. 버튼 클릭시 alert 출력 등)
+
+- Event : 웹 내부에서 발생하는 사용자의 행동 (버튼 클릭, text 입력, 스크롤 등)
+- Handling : 처리 하는것
+
+### 이벤트 핸들러
+
+사용자가 특정 동작을 수행할 때 실행하는 함수
+
+익명함수나 컴포넌트에 별도로 선언된 함수를 이벤트 핸들러의 함수로 사용할 수 있다.
+
+```jsx
+// 익명함수를 이벤트 핸들러의 함수로 사용한 경우
+	onClick={() => {
+	  console.log(text);
+  }}
+
+// 별도의 함수를 이벤트 핸들러의 함수로 사용한 경우
+// 1. 컴포넌트 내부에 별도의 함수 선언
+const handleClick = (() => {
+    console.log(color.toUpperCase())
+})
+...
+// 2. 선언한 함수를 이벤트 핸들러의 함수로 사용
+ onClick={handleClick}
+
+```
+
+### 이벤트 핸들러 설정시 유의할점
+
+이벤트 작성시 카멜케이스로 해당 이벤트를 작성한다.
+
+```jsx
+onclick (X)
+onClick (O)
+```
+
+이벤트 핸들러에 함수를 넣는 경우 함수이름만 넣어준다. 함수의 호출결과 `()`는 넣어주지 않도록 유의한다.
+
+```jsx
+ onClick={handleClick()}  //  (X)
+ onClick={handleClick}  //  (O)
+```
+
+### 이벤트 객체
+
+React에서 발생하는 이벤트들은 이벤트 핸들러의 함수를 호출한다.
+
+이벤트 핸들러가 호출한 함수는 매개변수로 이벤트 객체를 제공 받는다.
+
+전달받은 이벤트 객체를 콘솔에 출력해보면 `SyntheticBaseEvent`가 출력되는 것을 확인 할 수 있다.
+<img src="./img/SyntheticBaseEvent.png" title="SyntheticBaseEvent">
+
+### SyntheticBaseEvent (합성 이벤트 객체)
+
+다양한 브라우저(사파리, 크롬, 엣지, ...)를 여러 업체(Apple, Google, Naver, ...)에서 제공하다보니 동작하는 방식이 다른 경우가 있어 **`Cross Browsing Issue`**가 발생한다.
+
+`React`에서는 이러한 `Cross Browsing Issue`를 쉽게 해결해 주기 위해 `Synthetic Event`(합성 이벤트)를 제공한다.
+
+- `Synthetic Event` (=합성 이벤트) : 모든 웹 브라우저의 이벤트 객체를 하나로 통일한 형태
+- `SyntheticBaseEvent` (= 합성 이벤트 객체)
+    - **모든 웹 브라우저의 이벤트 객체를 하나로 통일한 형태의 객체**
+    - 여러 브라우저들의 규격을 참고해서 하나의 통일된 규격으로 브라우저 별로 이벤트 객체를 포맷팅 해준다.
+- `Cross Browsing Issue` : 브라우저 별 규격, 동작방식 등 스펙이 달라 발생하는 문제

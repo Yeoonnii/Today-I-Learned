@@ -213,15 +213,15 @@ export default Button;
 
 컴포넌트에 props를 지정하지 않았을 때 기본적으로 사용할 값이 설정되지 않은 상태에서 작업을 하면 문제가 발생할 수 있다.
 
-이를 방지하기 위해 부모 컴포넌트에서 특정 props 값이 주어지지 않았을 때 자식 컴포넌트에서 기본적으로 사용할 props값을 `~~defaultProps~~`라고 한다.
+이를 방지하기 위해 부모 컴포넌트에서 특정 props 값이 주어지지 않았을 때 자식 컴포넌트에서 기본적으로 사용할 props값을 ~~`defaultProps`~~라고 한다.
 
 ```jsx
 const Button = ({text, color}) => {
     return <button style={{color}}>{text} - {color.toUpperCase()}</button>
 }
 
-// ~~defaultProps~~ 를 사용하여 기본값을 설정
-Button.~~defaultProps~~ = {
+// defaultProps 를 사용하여 기본값을 설정
+Button.defaultProps = {
     color: "black",
 }
 
@@ -236,7 +236,7 @@ Warning 문구에서는 JavaScript의 **default parameters**를 사용하도록 
 
 [[🌍참고링크] JavaScript의 default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#description)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/2948bf54-5b9a-483c-a02e-307009cadd66/c2977adb-bb07-468e-a651-aed54e797b3a/Untitled.png)
+<img src="./img/defaultProps Deprecate.png" title="defaultProps Deprecate">
 
 `defaultProps` 대신 JavaScript의 **default parameters**를 사용하면 아래와 같이 코드를 작성할 수 있다.
 

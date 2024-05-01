@@ -234,11 +234,11 @@ React에서는 2019년부터 `defaultProps` 사용을 **Deprecate** 하였으며
 
 Warning 문구에서는 JavaScript의 **default parameters**를 사용하도록 권장한다.
 
-[[🌍참고링크] JavaScript의 default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#description)
 
 <img src="./img/defaultProps Deprecate.png" title="defaultProps Deprecate">
 
-`defaultProps` 대신 JavaScript의 **default parameters**를 사용하면 아래와 같이 코드를 작성할 수 있다.
+`defaultProps` 대신 JavaScript의 **default parameters**를 사용하여 아래와 같이 코드를 작성할 수 있다.
+[[🌍참고링크] JavaScript의 default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#description)
 
 ```
 const Button = ({text, color = "black"}) => {

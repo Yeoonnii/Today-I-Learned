@@ -5,7 +5,7 @@
 ESLint는 자바스크립트 코드에서 발견되는 문제시되는 패턴들을 식별하기 위한 정적 코드 분석 도구이다.
 [참고 링크 : ESlint 공식 홈페이지](https://eslint.org/)
 
-<br>
+<br><br>
 
 ## ch02. React Component
 
@@ -65,7 +65,7 @@ const Header = () => {
 - Es 모듈 시스템에 의해 특정 컴포넌트를 `export` , `import` 하여 사용할 수 있다.
 - vite로 생성한 React 프로젝트에서 import 시 확장자를 생략해도 인식이 가능하다. (vite 내부에 자동 설정되어 있음)
 
-<br>
+<br><br>
 
 ## ch03. JSX로 UI 표현하기
 
@@ -166,4 +166,178 @@ import "./Main.css";
     background-color: pink;
     border: 5px solid green;
 }
+```
+<br><br>
+
+## ch04. props로 데이터 전달하기
+### props 란?
+
+- props는 property를 뜻하며 다른 컴포넌트에 값을 전달할 때 props를 사용한다.
+- 컴포넌트에 전달되는 props는 파라미터를 통하여 값을 가져올 수 있다.
+- props를 통해 주어진 값에 따라 각각 컴포넌트 별 렌더링이 가능하다.
+- props는 자식컴포넌트 → 부모컴포넌트로만 전달할 수 있다.
+
+### props 사용 방법
+
+부모 컴포넌트에서 전달한 값을 자식컴포넌트에서 `props` 를 사용하여 값을 가져올 수 있다.
+
+```jsx
+// 부모 컴포넌트
+const Main = () => {
+  return (
+    <>
+    <Button text={"메일"} color={"red"}/><br />
+    <Button text={"카페"} color={"blue"}/><br />
+    <Button text={"블로그"} color={"green"}/><br />
+    </>
+  )
+};
+
+export default Main;
+
+// 자식 컴포넌트
+// props 사용법 1. props를 이용하여 전달한 값을 가져올 수 있다.
+const Button = (props) => {
+    return <button style={{props.color}}>{props.text}</button>
+}
+
+// props 사용법 2. 구조분해 할당을 이용하여 props를 가져올 수 있다.
+const Button = ({text, color}) => {
+    return <button style={{color}}>{text}</button>
+}
+
+export default Button;
+```
+
+### ~~defaultProps 설정하기~~ → Deprecate !
+
+컴포넌트에 props를 지정하지 않았을 때 기본적으로 사용할 값이 설정되지 않은 상태에서 작업을 하면 문제가 발생할 수 있다.
+
+이를 방지하기 위해 부모 컴포넌트에서 특정 props 값이 주어지지 않았을 때 자식 컴포넌트에서 기본적으로 사용할 props값을 `~~defaultProps~~`라고 한다.
+
+```jsx
+const Button = ({text, color}) => {
+    return <button style={{color}}>{text} - {color.toUpperCase()}</button>
+}
+
+// ~~defaultProps~~ 를 사용하여 기본값을 설정
+Button.~~defaultProps~~ = {
+    color: "black",
+}
+
+export default Button;
+```
+
+### ~~defaultProps~~대신 default parameters 사용하기
+
+React에서는 2019년부터 `defaultProps` 사용을 **Deprecate** 하였으며 React 18.2 버전에서 `defaultProps`를 사용하는 경우 Console 탭에 Warning 문구가 발생한다.
+
+Warning 문구에서는 JavaScript의 **default parameters**를 사용하도록 권장한다.
+
+[[🌍참고링크] JavaScript의 default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#description)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/2948bf54-5b9a-483c-a02e-307009cadd66/c2977adb-bb07-468e-a651-aed54e797b3a/Untitled.png)
+
+`defaultProps` 대신 JavaScript의 **default parameters**를 사용하면 아래와 같이 코드를 작성할 수 있다.
+
+```
+const Button = ({text, color = "black"}) => {
+    return <button style={{color}}>{text} - {color.toUpperCase()}</button>
+}
+
+export default Button;
+```
+
+### 여러개의 props를 전달해야 하는 경우
+
+여러개의 props를 나열하는 경우 props가 많아질수록 코드가 복잡해 보일 수 있다.
+
+이런경우 전달하는 컴포넌트에서 별도의 `props` 객체를 생성하고, 자식 컴포넌트에 `props` 전달시 스프레드 연산자를 이용하여 전달할 수 있다.
+
+```jsx
+// 부모 컴포넌트
+import Button from "./Button";
+import "./Main.css";
+const Main = () => {
+  // * 전달할 props 객체 *
+  const buttonProps = {
+    text: "메일",
+    color: "pink",
+    a: 1,
+    b: 2,
+    c: 3
+  }
+
+  return (
+    <>
+    // * props 객체 전달시 spread 연산자를 사용하여 전달 *
+    <Button {...buttonProps}/><br />
+    <Button text={"카페"} color={"blue"}/><br />
+    <Button text={"블로그"} color={"green"}/><br />
+    </>
+  )
+};
+
+export default Main;
+
+// 자식 컴포넌트
+// default parameters를 사용하여 기본값을 세팅
+const Button = ({text, color = "black", a = 0, b = 0, c = 0}) => {
+    return <button style={{color}}>{text} - {color.toUpperCase()} - {[a,b,c]}</button>
+}
+
+export default Button;
+
+```
+
+### props에 전달할 수 있는 값들
+
+JavaScript의 값들뿐만 아니라 HTML의 element, React 컴포넌트도 전달이 가능하다.
+
+### props에 element 전달하기
+
+```jsx
+// 부모 컴포넌트
+...
+// 컴포넌트 태그 사이에 전달할 element 태그를 작성
+<Button text={"자식요소"}>
+   <div>전달할 자식 Element</div>
+</Button>
+...
+
+// 자식 컴포넌트
+// children을 사용하여 부모에서 전달한 element 값을 반환받는다.
+const Button = ({text, color = "black", a = 0, b = 0, c = 0, children = null}) => {
+    return (
+	    <button style={{color}}>
+	        {text} - {color.toUpperCase()} - {[a,b,c]} 
+	        {children}
+	    </button>
+    )
+}
+...
+```
+
+### props에 컴포넌트 전달하기
+
+```jsx
+// 부모 컴포넌트
+...
+// 컴포넌트 태그 사이에 전달할 컴포넌트 태그를 작성
+<Button text={"자식요소"}>
+   <Header />
+</Button>
+...
+
+// 자식 컴포넌트
+// children을 사용하여 부모에서 전달한 컴포넌트를 반환받는다.
+const Button = ({text, color = "black", a = 0, b = 0, c = 0, children = null}) => {
+    return (
+	    <button style={{color}}>
+	        {text} - {color.toUpperCase()} - {[a,b,c]} 
+	        {children}
+	    </button>
+    )
+}
+...
 ```

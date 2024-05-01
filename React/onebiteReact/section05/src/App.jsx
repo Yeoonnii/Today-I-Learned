@@ -6,10 +6,10 @@ import Main from "./components/Main";
 function App() {
   return (
     <>
-      <Header />
-      <h1>Hello React!</h1>
+      {/* <Header /> */}
+      {/* <h1>Hello React!</h1> */}
       <Main />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

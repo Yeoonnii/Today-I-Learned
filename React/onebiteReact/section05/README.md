@@ -237,7 +237,7 @@ Warning 문구에서는 JavaScript의 **default parameters**를 사용하도록 
 
 <img src="./img/defaultProps Deprecate.png" title="defaultProps Deprecate">
 
-`defaultProps` 대신 JavaScript의 **default parameters**를 사용하여 아래와 같이 코드를 작성할 수 있다.
+`defaultProps` 대신 JavaScript의 **default parameters**를 사용하여 아래와 같이 코드를 작성할 수 있다.<br />
 [[🌍참고링크] JavaScript의 default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#description)
 
 ```

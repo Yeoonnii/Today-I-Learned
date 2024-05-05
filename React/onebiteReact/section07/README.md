@@ -73,3 +73,82 @@ useState 객체값을 변경하는 setState 함수는 비동기로 동작한다.
 일반적인 함수에서 setState 함수 호출 후 state 값을 사용하면 변경하려는 값이 업데이트가 완료되지 않아 이전의 state값으로 작업이 진행되는 문제가 발생할 수 있다.
 
 useEffect에서 useState 객체값을 변경을 감지하여 useState 객체값이 완전히 변경 된 이후 사이드 이펙트에 해당하는 부가적인 작업을 실행해야 한다.
+
+
+<br><br>
+
+## ch03. useEffect로 라이프사이클 제어하기
+### Mount
+
+컴포넌트 최초 렌더링시 useEffect를 사용하여 작업 수행
+
+```jsx
+function App() {
+...
+  // useEffect
+  // 1. mount : 컴포넌트가 렌더링 되는 시점
+  useEffect(() => { 
+    console.log('mount!');
+  }, [])
+...
+```
+
+### Update
+
+컴포넌트 변경시 useEffect를 사용하여 작업 수행
+
+```jsx
+function App() {
+...
+	// 2. update : 컴포넌트가 변경되는 시점
+  useEffect(() => {
+    // 컴포넌트 mount시에 useEffect를 수행하고 싶지 않은 경우 ref 객체를 플래그로 사용하여 함수를 수행하지 않도록 한다.
+    if(!isMount.current){
+      // 컴포넌트가 mount 되지 않은 상황
+      isMount.current = true;
+      console.log('isMount.current --> set true!');
+      return;
+    }
+    // 컴포넌트가 mount 된 이후 update 된 상황
+    console.log('updated!');
+  })
+...
+```
+
+### UnMount
+
+컴포넌트 렌더링 종료시  useEffect의 콜백함수가 반환하는 함수(클린업, 정리함수) 실행
+
+```jsx
+// App.jsx
+function App() {
+...
+ return (
+			...
+			<section>
+        <Viewer count={count} />
+        {/* count 가 짝수인 경우만 Even 컴포넌트 출력 */}
+        {(count % 2 === 0) ? <Even /> : null}
+      </section>
+      ...
+      
+// Even.jsx
+import { useEffect } from "react"
+
+const Even = () => {
+    
+  // 3.unMount : 컴포넌트 렌더링이 종료되는 시점
+    useEffect(() => {
+        // useEffect의 콜백함수가 반환하는 함수 : 클린업, 정리함수 라고 부른다.
+        // useEffect가 unMount(종료)될 때 실행된다.
+        return () => {
+            console.log("unMount");
+        }
+    }, [])
+  return (
+    <div>짝수입니다!</div>
+  )
+}
+
+export default Even;
+```

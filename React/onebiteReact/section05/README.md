@@ -444,3 +444,227 @@ React에서 발생하는 이벤트들은 이벤트 핸들러의 함수를 호출
     - **모든 웹 브라우저의 이벤트 객체를 하나로 통일한 형태의 객체**
     - 여러 브라우저들의 규격을 참고해서 하나의 통일된 규격으로 브라우저 별로 이벤트 객체를 포맷팅 해준다.
 - `Cross Browsing Issue` : 브라우저 별 규격, 동작방식 등 스펙이 달라 발생하는 문제
+
+
+<br><br>
+
+## ch06. State로 상태관리하기
+
+
+
+<br><br>
+
+## ch07. State와 Props
+
+### React Components가 리렌더링 되는 Case
+
+1. 컴포넌트 내부의 state가 변경되는 경우
+2. 컴포넌트가 전달받는 props가 변경되는 경우
+3. 부모 컴포넌트가 리렌더링 되는 경우
+
+<br><br>
+
+## ch08. State로 사용자 입력 관리하기 1
+
+
+<br><br>
+
+## ch09. State로 사용자 입력 관리하기
+비슷한 기능을 하는 객체와 함수는 통일하여 사용하면 간결한 코드를 작성할 수 있다.
+
+```jsx
+// 통합 input 객체
+  const [input, setInput] = useState({
+    name: "",
+    birth: "",
+    country: "",
+    bio: "",
+  });
+  
+  / 통합 onChange 함수
+  const onChange = (e) => {
+    // element에 지정한 name 속성을 key로 사용하고, value 속성을 값으로 사용하여 업데이트
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+```
+
+
+<br><br>
+
+## ch10. useRef로 컴포넌트의 변수 생성하기
+### useRef
+
+- 새로운 Reference 객체를 생성하는 기능, 생성된 객체는 값을 저장한다.
+- 컴포넌트 렌더링에 영향을 미치고 싶지 않은 경우 useRef를 사용한다.
+- useRef로 생성된 변수는 컴포넌트 내부의 특정 DOM 요소에 접근 가능하다.
+    
+    → 접근한 DOM 요소를 조작할 수도 있다.
+    
+    → 자바스크립트의 getElementById, querySelector와 비슷하다.
+    
+
+### useState와 useRef의 차이점
+
+useState와 useRef는 둘다 생성한 객체 변수에 값을 저장하는 기능을 하는데, 다른점은 무엇일까?
+
+| useRef | useState |
+| --- | --- |
+| Reference 객체를 생성 | State를 생성 |
+| 생성된 객체는 컴포넌트 내부 변수로 활용 가능 | 생성된 객체는 컴포넌트 내부 변수로 활용 가능 |
+| 어떤 경우에도 리렌더링을 유발하지 않음 | 값이 변경되면 컴포넌트 리렌더링 |
+
+### useRef 객체로 특정 DOM 요소에 접근하기
+
+useRef 객체를 콘솔에 출력해보면 `{current: input}` 객체가 출력된다.
+
+useRef는 current라는 키값의 프로퍼티가 생성되고 값을 변경시 current의 값을 이용한다.
+
+```jsx
+const inputRef = useRef();
+
+// 제출 버튼 클릭시 실행되는 함수
+const onSubmit = () => {
+    console.log(inputRef);
+    // input 객체의 값이 비어있는 경우 alert 출력 + input focus
+    if(inputRef.current.value === ""){
+      alert('이름이 입력되지 않았습니다.')
+      inputRef.current.focus();
+    }
+    console.log(inputRef.current);  // <input name="name" ... />
+  }
+  
+  ...
+  <input
+          name="name"
+          value={input.name}
+          onChange={onChange}
+          ref={inputRef}
+          placeholder={"이름"}
+          />
+  ...
+  <button
+        onClick={onSubmit}
+      >
+        제출
+  </button>
+```
+
+### useRef를 사용해야 하는 이유
+
+react에서 사용되는 특수한 변수들인 useState나 useRef는 컴포넌트가 리렌더링 되어도 변수값이 초기화 되지 않는다.
+
+* 컴포넌트 내부에 자바스크립트 변수를 사용한 경우
+→ 컴포넌트가 리렌더링 될때마다 자바스크립트로 선언한 변수가 초기화 되어 값을 유지할 수 없는 문제가 발생한다.
+
+```jsx
+	 let count = 0;  // 컴포넌트가 리렌더링 될 때 마다 값이 초기화 된다.
+  
+   const onChange = (e) => {
+    count++;
+    console.log(count);
+    // useState 값 변경시 컴포넌트가 리렌더링 된다.
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+```
+<img src="./img/React_useRef.png" title="React useRef">
+
+* 자바스크립트 변수를 컴포넌트 외부에 사용한 경우 
+→ 의도하지 않은 동작을 할 수 있기때문에 권장되지 않는다.
+ex) 상위 컴포넌트에서 자바스크립트 변수를 포함되어 있는 동일한 하위컴포넌트를 여러개 호출하는 경우, 하위 컴포넌트가 가지고 있는 자바스크립트 변수는 동일한 하위컴포넌트 내부에서 값이 공유되는 문제가 발생한다.
+
+<br><br>
+
+## ch11. React Hooks
+### React Hooks 란?
+
+- Class 컴포넌트에서 사용할 수 있던 기능을 Function 컴포넌트에서 사용 가능하도록 한 React 내장 함수들
+- React Hooks 에는 `use`라는 접두사가 붙으며, `use`라는 접두사를 이용하면 Custon Hook도 제작이 가능하다.
+
+### React Hooks 관련 3가지 팁
+
+1. React Hooks는 함수 컴포넌트, 커스텀 훅 내부에서만 호출이 가능하다.
+컴포넌트 외부에서 Hooks를 호출하려 하는 경우 아래와 같은 오류가 발생한다.
+<img src="./img/ReactHooks_InvalidHookCall_Error.png" title="ReactHooks InvalidHookCall Error">
+
+2. React Hooks는 반복문, 조건문 내부에서 사용이 불가하다.
+React Hooks가 반복문이나 조건문 내부에서 사용가능하게 되면 서로 다른 Hook들의 호출 순서가 꼬여 내부적인 오류가 발생할 수 있다.
+
+3. 나만의 훅(Custom Hooks)을 만들어 사용할 수 있다.
+- React 에서는 함수의 이름 앞에 `use`라는 접두사를 사용한 경우 커스텀 훅(Custom Hooks)으로 인식한다.
+- 모든 컴포넌트에서 React Hooks 를 사용하여 반복되어 쓰이는 코드들을 커스텀 훅으로 분리하면 중복되는 코드를 줄이며 재사용성을 높일 수 있다.
+
+[ 커스텀 훅 분리 전 ]
+
+```jsx
+// HookExam.jsx
+const HookExam = () => {
+  // useState를 사용하는 input 값에 대해 중복되는 코드가 발생한다. 
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+  const [input3, setInput3] = useState("");
+
+  const onChange1 = (e) => {
+    setInput1(e.target.value)
+  }
+  const onChange2 = (e) => {
+    setInput2(e.target.value)
+  }
+  const onChange3 = (e) => {
+    setInput3(e.target.value)
+  }
+
+  return (
+    <div>
+      <input value={input1} onChange={onChange1} /><br />
+      <input value={input2} onChange={onChange2} /><br />
+      <input value={input3} onChange={onChange3} /><br />
+    </div>
+  )
+}
+
+export default HookExam
+```
+
+[ 커스텀 훅 분리 후 ]
+
+```jsx
+// components/HookExam.jsx
+import useInput from '../hooks/useInput';
+
+const HookExam = () => {
+  // Custom Hook - useInput을 사용 
+  const [input1, onChange] = useInput();
+  const [input2, onChange2] = useInput();
+  const [input3, onChange3] = useInput();
+
+  return (
+    <div>
+      <input value={input1} onChange={onChange} /><br />
+      <input value={input2} onChange={onChange2} /><br />
+      <input value={input3} onChange={onChange3} /><br />
+    </div>
+  )
+}
+
+export default HookExam
+
+// hooks/useInput.jsx
+import { useState } from "react";
+
+function useInput() {
+    const [input, setInput] = useState("");
+
+    const onChange = (e) => {
+        setInput(e.target.value)
+    }
+    return [input, onChange];
+}
+
+export default useInput;
+```

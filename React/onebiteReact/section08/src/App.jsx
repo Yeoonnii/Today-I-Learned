@@ -42,14 +42,23 @@ function App() {
     setTodos(
       // todos 를 순회하며 todo.id 와 targetId 가 일치하는 경우에만 isDone의 값을 업데이트 한다.
       todos.map((todo) => todo.id === targetId ? {...todo, isDone: !todo.isDone} : todo)
-    )
+    );
+  }
+  
+  // todos State 값들 중 targetId와 일치하는 id를 갖는 todo 아이템을 제외한 배열 객체 반환
+  const onDeleteTodo = (targetId) => {
+    // 인수 : todos의 배열중 id 와 일치하는 targetId
+    setTodos(
+      // 배열 내부의 모든 todo를 순회하며 todo.id 와 targetId 가 일치하지 않는 todo만 반환
+      todos.filter((todo) => todo.id !== targetId)
+    );
   }
 
   return (
     <div className="App">
       <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdateIsDone={onUpdateIsDone}/>
+      <List todos={todos} onUpdateIsDone={onUpdateIsDone} onDeleteTodo={onDeleteTodo}/>
     </div>
   );
 }

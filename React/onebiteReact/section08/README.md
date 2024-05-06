@@ -113,7 +113,8 @@ export default Editor;
 
 ## ch05. Read - 투두리스트 렌더링하기
 <img src="./img/Warning.png" title="Warning">
-Key는 React가 어떤 항목을 변경, 추가 또는 삭제할지 식별하는 것을 돕는다. key는 엘리먼트에 안정적인 고유성을 부여하기 위해 배열 내부의 엘리먼트에 지정해야 한다.
+Key는 React가 어떤 항목을 변경, 추가 또는 삭제할지 식별하는 것을 돕는다.
+key는 엘리먼트에 안정적인 고유성을 부여하기 위해 배열 내부의 엘리먼트에 지정해야 한다.
 
 [[🌍 React 공식문서] 리스트와 Key](https://ko.legacy.reactjs.org/docs/lists-and-keys.html#keys)
 

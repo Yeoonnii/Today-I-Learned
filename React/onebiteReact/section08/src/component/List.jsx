@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./List.css";
 import TodoItem from "./TodoItem";
-const List = ({ todos }) => {
+const List = ({ todos, onUpdateIsDone }) => {
   // 검색어 입력을 위한 useState
   const [search, setSearch] = useState("");
 
@@ -37,7 +37,7 @@ const List = ({ todos }) => {
       <div className="todos_wrapper">
         {/* 필터링된 todos 데이터 반복하여 렌더링 */}
         {filterdTodos.map((todo) => {
-          return <TodoItem key={todo.id} {...todo} />;
+          return <TodoItem key={todo.id} {...todo} onUpdateIsDone={onUpdateIsDone}/>;
         })}
       </div>
     </div>

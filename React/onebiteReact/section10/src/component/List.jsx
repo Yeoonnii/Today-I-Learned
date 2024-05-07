@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./List.css";
 import TodoItem from "./TodoItem";
 const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
@@ -26,8 +26,25 @@ const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
   // 필터링된 todos 데이터 리턴
   const filterdTodos = getFilteredData();
 
-  // 최적화 연습 - useMemo
-  const getAnalyzedData = () => {
+  // todo 분석 함수 호출
+  // const getAnalyzedData = () => {
+  //   console.log("getAnalyzedData 함수 호출!");
+  //   const totalCount = todos.length;
+  //   const doneCount = todos.filter((todo) => todo.isDone).length;
+  //   const notDoneCount = totalCount - doneCount;
+
+  //   return {
+  //     totalCount,
+  //     doneCount,
+  //     notDoneCount,
+  //   };
+  // };
+
+  // const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
+
+  // useMemo를 사용하여 컴포넌트 연산 최적화
+  const { totalCount, doneCount, notDoneCount } = useMemo(() => {
+    console.log("useMemo 실행!");
     const totalCount = todos.length;
     const doneCount = todos.filter((todo) => todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
@@ -37,16 +54,15 @@ const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
       doneCount,
       notDoneCount,
     };
-  };
-
-  
-
-  const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
+  }, [todos]);
 
   return (
     <div className="List">
       <h4>To-Do List 🌷</h4>
-      <div className="Analyze">⏩ total : {totalCount} / ✅ done: {doneCount} / 🚫 notDone: {notDoneCount}</div>
+      <div className="Analyze">
+        ⏩ total : {totalCount} / ✅ done: {doneCount} / 🚫 notDone:{" "}
+        {notDoneCount}
+      </div>
       <input
         value={search}
         onChange={onChangeSearch}

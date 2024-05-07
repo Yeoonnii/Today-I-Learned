@@ -26,7 +26,7 @@
 
 **메모이제이션(Memoization : 기억해두기, 메모해두기) 기법**을 기반으로 불 필요한 연산을 최적화 하는 React Hook
 
-(자매품으로 useCallback이 있다.)
+(자매품 : useCallback)<br>
 
 ### useMemo 사용법
 
@@ -36,6 +36,8 @@ const value = useMemo(() => {},[])
 
 - useMemo는 첫번째 인자로 실행할 콜백함수, 두번째 인자로 의존성 배열을 받는다.
 - useEffect와 같이 의존성 배열의 값이 변경되는 경우에만 첫번째 인자의 콜백함수가 수행된다.
+
+<br>
 
 [ useMemo 사용 전 ]
 <img src="./img/before_useMemo.png" title="before_useMemo" />
@@ -61,6 +63,8 @@ const getAnalyzedData = () => {
 return (
   <div className="Analyze">⏩ total : {totalCount} / ✅ done: {doneCount} / 🚫 notDone: {notDoneCount}</div>
 ```
+
+<br>
 
 [ useMemo 사용하여 컴포넌트 연산 최적화 ]
 <img src="./img/after_useMemo.png" title="after_useMemo" />
@@ -98,6 +102,8 @@ React.memo로 컴포넌트를 최적화된 컴포넌트는
 - 부모가 리렌더링 되는 경우에도 리렌더링 되지 않는다.
 - 자신이 받는 props가 변경되는 경우에만 리렌더링 된다.
 
+<br>
+
 ### React.memo()를 사용하여 불필요한 리렌더링 줄이기 - 1
 
 `React.memo()`를 사용하여 부모 컴포넌트(App.jsx) 렌더링시 자식 컴포넌트(Header.jsx)의 불필요한 렌더링을 최적화할 수 있다.
@@ -125,19 +131,30 @@ export default memoizedComponent;
 export default memo(Header);
 ```
 
+<br>
+
 ### React.memo()를 사용하여 불필요한 리렌더링 줄이기 - 2
+
+<br>
+
 [ React.memo() 사용 전 ]
 <img src="./img/before_ReactMemo2.png" title="before_ReactMemo">
 
+<br>
+
 [ React.memo() 사용 후 ]
 <img src="./img/before_ReactMemo2.png" title="before_ReactMemo">
-javaScript에서 함수는 객체로 분류되며, 리렌더링 될 때마다 새로운 메모리 주소에 저장된다.
+javaScript에서 함수는 객체로 분류되며, 메모리 주소에 의한 참조 비교가 일어난다.
 
-props로 받아오는 `onUpdateIsDone`, `onDeleteTodo` 함수는 App 컴포넌트에 존재하며, App 컴포넌트가 리렌더링 될 때 마다 새로운 메모리 주소를 할당받는다.
+리렌더링시 새로 생성되는 함수는 매번 새로운 메모리 주소를 할당받는다.
 
-TodoItem 컴포넌트는 얕은 비교를 통해 `onUpdateIsDone`, `onDeleteTodo` 함수가 변경된것으로 인식하여 결과적으로 props가 변경되었다고 판단한다.
+TodoItem 컴포넌트에서 props로 받아오는 `onUpdateIsDone`, `onDeleteTodo` 함수는 App 컴포넌트에 존재하며,
+App 컴포넌트가 리렌더링 될 때 마다 새로운 메모리 주소를 할당받는다.
 
-이러한 문제를 해결하기 위해 `React.memo`메서드를 커스텀하여 컴포넌트 최적화를 수행할 수 있다.
+TodoItem 컴포넌트 리렌더링 될때마다 얕은 비교를 통해 `onUpdateIsDone`, `onDeleteTodo` 함수가 변경된것으로 인식하게 되고 결과적으로 props가 변경되었다고 판단한다.
+
+위와같이 불필요한 렌더링이 일어나는 문제를 해결하기 위해 `React.memo`메서드를 커스텀하여 컴포넌트 최적화를 수행할 수 있다.
+
 ```jsx
 import { memo } from "react";
 import "./TodoItem.css";
@@ -181,6 +198,8 @@ export default memo(TodoItem, (prevProps, nextProps) => {
 });
 ```
 
+<br>
+
 ### 고차 컴포넌트(HOC, Higher Order Component)
 
 고차 컴포넌트(HOC, Higher Order Component)는 컴포넌트를 가져와 새 컴포넌트를 반환하는 함수이며, 컴포넌트 로직을 재사용하기 위한 React의 고급 기술이다.
@@ -204,11 +223,15 @@ const memoizedCallback = useCallback(() => {}, []);
 - 첫번째 인자로 콜백 함수를, 두번째 인자로는 의존성배열을 명시하여 배열 내의 값이 변경될 때까지 저장해놓고 재사용할 수 있게 해줍니다.
 - `useCallback()`을 사용하면, 해당 컴포넌트가 랜더링되더라도 그 함수가 의존하는 값들이 바뀌지 않는 한 기존 함수를 계속해서 반환한다.
 
+<br>
+
 ### 최적화를 하는 시점
 
 기능구현이 완료된 후 최적화가 진행되어야 한다.
 
 기능 구현 전 최적화를 진행하는 경우 원하지 않는 시점에 정상적인 작동을 하지 않을수 있으며, 오히려 성능이 저하될 수도 있다.
+
+<br>
 
 ### 최적화의 대상
 

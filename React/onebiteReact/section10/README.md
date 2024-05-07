@@ -190,3 +190,32 @@ export default memo(TodoItem, (prevProps, nextProps) => {
 `React.memo()` 또한 함수 컴포넌트를 받아서 새로운 메모이즈된 함수 컴포넌트를 반환한다. 이 메모이즈된 컴포넌트는 입력으로 받은 props가 변경되지 않으면 이전에 렌더링된 결과를 재사용한다. 이는 컴포넌트의 렌더링을 최적화하는 데 사용된다.
 
 따라서 `React.memo()`는 고차 컴포넌트와 유사한 역할을 하며, 컴포넌트의 성능을 최적화하는 데 활용된다.
+
+<br><br>
+
+## ch04. useCallback과 함수 재생성 방지
+### useCallback
+
+```jsx
+const memoizedCallback = useCallback(() => {}, []);
+```
+
+- `useCallback()`은 함수를 메모이제이션(memoization)하기 위해서 사용되는 React hook 이다.
+- 첫번째 인자로 콜백 함수를, 두번째 인자로는 의존성배열을 명시하여 배열 내의 값이 변경될 때까지 저장해놓고 재사용할 수 있게 해줍니다.
+- `useCallback()`을 사용하면, 해당 컴포넌트가 랜더링되더라도 그 함수가 의존하는 값들이 바뀌지 않는 한 기존 함수를 계속해서 반환한다.
+
+### 최적화를 하는 시점
+
+기능구현이 완료된 후 최적화가 진행되어야 한다.
+
+기능 구현 전 최적화를 진행하는 경우 원하지 않는 시점에 정상적인 작동을 하지 않을수 있으며, 오히려 성능이 저하될 수도 있다.
+
+### 최적화의 대상
+
+모든것에 최적화에 적용되면 안된다.
+
+최적화가 적용이 되어야 할것 같은 연산들, 함수들, 컴포넌트에만 최적화를 적용하는것이 좋다.
+
+### **useMemo/useCallback** 최적화 관련 아티클
+
+[🌍 When to useMemo and useCallback](https://goongoguma.github.io/2021/04/26/When-to-useMemo-and-useCallback/)

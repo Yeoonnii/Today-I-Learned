@@ -26,22 +26,6 @@ const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
   // 필터링된 todos 데이터 리턴
   const filterdTodos = getFilteredData();
 
-  // todo 분석 함수 호출
-  // const getAnalyzedData = () => {
-  //   console.log("getAnalyzedData 함수 호출!");
-  //   const totalCount = todos.length;
-  //   const doneCount = todos.filter((todo) => todo.isDone).length;
-  //   const notDoneCount = totalCount - doneCount;
-
-  //   return {
-  //     totalCount,
-  //     doneCount,
-  //     notDoneCount,
-  //   };
-  // };
-
-  // const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
-
   // useMemo를 사용하여 컴포넌트 연산 최적화
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
     console.log("useMemo 실행!");

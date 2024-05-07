@@ -37,8 +37,7 @@ const value = useMemo(() => {},[])
 - useMemo는 첫번째 인자로 실행할 콜백함수, 두번째 인자로 의존성 배열을 받는다.
 - useEffect와 같이 의존성 배열의 값이 변경되는 경우에만 첫번째 인자의 콜백함수가 수행된다.
 
-
-### useMemo 사용 전
+[ useMemo 사용 전 ]
 <img src="./img/before_useMemo.png" title="before_useMemo" />
 
 ```jsx
@@ -62,7 +61,8 @@ const getAnalyzedData = () => {
 return (
   <div className="Analyze">⏩ total : {totalCount} / ✅ done: {doneCount} / 🚫 notDone: {notDoneCount}</div>
 ```
-### useMemo 사용하여 컴포넌트 연산 최적화
+
+[ useMemo 사용하여 컴포넌트 연산 최적화 ]
 <img src="./img/after_useMemo.png" title="after_useMemo" />
 
 ```jsx
@@ -82,3 +82,111 @@ const { totalCount, doneCount, notDoneCount } = useMemo(() => {
 // 의존성 배열(deps)에 todos를 넣어줌으로써,
 // todos가 변경되는 경우만 useMemo가 수행된다.
 ```
+<br><br>
+
+## ch03. React.memo와 컴포넌트 렌더링 최적화
+### React.memo란?
+
+컴포넌트를 인수로 받아, 최적화된 컴포넌트로 만들어 반환
+
+```jsx
+const MemoizedComponent = memo(Component);
+```
+
+React.memo로 컴포넌트를 최적화된 컴포넌트는 
+
+- 부모가 리렌더링 되는 경우에도 리렌더링 되지 않는다.
+- 자신이 받는 props가 변경되는 경우에만 리렌더링 된다.
+
+### React.memo()를 사용하여 불필요한 리렌더링 줄이기 - 1
+
+`React.memo()`를 사용하여 부모 컴포넌트(App.jsx) 렌더링시 자식 컴포넌트(Header.jsx)의 불필요한 렌더링을 최적화할 수 있다.
+
+```jsx
+import { memo } from "react"
+import "./Header.css"
+
+const Header = () => {
+  return (
+    <div className="Header">
+        <h3>Daily To-Do 📆</h3>
+        <h1>{new Date().toDateString()}</h1>
+    </div>
+  )
+}
+
+// React.memo 사용하여 export
+const memoizedComponent = memo(Header);
+export default memoizedComponent;
+```
+
+```jsx
+// 위 export 구문을 좀 더 간결하게 작성할 수 있다.
+export default memo(Header);
+```
+
+### React.memo()를 사용하여 불필요한 리렌더링 줄이기 - 2
+[ React.memo() 사용 전 ]
+<img src="./img/before_ReactMemo2.png" title="before_ReactMemo">
+
+[ React.memo() 사용 후 ]
+<img src="./img/before_ReactMemo2.png" title="before_ReactMemo">
+javaScript에서 함수는 객체로 분류되며, 리렌더링 될 때마다 새로운 메모리 주소에 저장된다.
+
+props로 받아오는 `onUpdateIsDone`, `onDeleteTodo` 함수는 App 컴포넌트에 존재하며, App 컴포넌트가 리렌더링 될 때 마다 새로운 메모리 주소를 할당받는다.
+
+TodoItem 컴포넌트는 얕은 비교를 통해 `onUpdateIsDone`, `onDeleteTodo` 함수가 변경된것으로 인식하여 결과적으로 props가 변경되었다고 판단한다.
+
+이러한 문제를 해결하기 위해 `React.memo`메서드를 커스텀하여 컴포넌트 최적화를 수행할 수 있다.
+```jsx
+import { memo } from "react";
+import "./TodoItem.css";
+const TodoItem = ({ id, isDone, content, date, onUpdateIsDone, onDeleteTodo }) => {
+  // input 태그의 checkbox 클릭시 실행될 함수
+  const onChangeCheck = () => {
+    // 전달받은 함수 실행
+    onUpdateIsDone(id);
+  };
+
+  // 삭제버튼 클릭시 실행될 함수
+  const handleDeleteButton = () => {
+    // 전달받은 함수 실행
+    onDeleteTodo(id);
+  }
+
+  return (
+    <div className="TodoItem">
+      <input checked={isDone} onChange={onChangeCheck} type="checkbox" />
+      <div className="content">{content}</div>
+      <div className="date">{new Date(date).toLocaleDateString()}</div>
+      <button onClick={handleDeleteButton}>삭제</button>
+    </div>
+  );
+};
+
+// memo 메서드의 두번째 인자로 콜백함수를 전달하여
+// 수동적으로 props 변경되었는지 판단
+export default memo(TodoItem, (prevProps, nextProps) => {
+  // 콜백함수의 인자로 prevProps, nextProps 전달
+  // --> 콜백함수의 반환값에 따라 props 변경 여부를 판단
+  
+  // 콜백함수가 true 반환시 -> Props 바뀌지 않음 -> 리렌더링 되지 않음
+  // 콜백함수가 false 반환시 -> Props 바뀜 -> 리렌더링 됨
+  if(prevProps.id !== nextProps.id) return false;
+  if(prevProps.isDone !== nextProps.isDone) return false;
+  if(prevProps.content !== nextProps.content) return false;
+  if(prevProps.date !== nextProps.date) return false;
+
+  return true;
+});
+```
+
+### 고차 컴포넌트(HOC, Higher Order Component)
+
+고차 컴포넌트(HOC, Higher Order Component)는 컴포넌트를 가져와 새 컴포넌트를 반환하는 함수이며, 컴포넌트 로직을 재사용하기 위한 React의 고급 기술이다.
+
+이를 통해 컴포넌트를 래핑하여 추가 기능을 제공하거나 성능을 최적화할 수 있다.
+
+`React.memo()` 또한 함수 컴포넌트를 받아서 새로운 메모이즈된 함수 컴포넌트를 반환한다. 이 메모이즈된 컴포넌트는 입력으로 받은 props가 변경되지 않으면 이전에 렌더링된 결과를 재사용한다. 이는 컴포넌트의 렌더링을 최적화하는 데 사용된다.
+
+따라서 `React.memo()`는 고차 컴포넌트와 유사한 역할을 하며, 컴포넌트의 성능을 최적화하는 데 활용된다.

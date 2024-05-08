@@ -1,0 +1,33 @@
+.List {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.List>input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    padding: 15px 0px;
+}
+
+.List>input:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(252, 172, 223);
+}
+
+.List .todos_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.List .Analyze {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: 0 auto;
+    border: 2px solid rgb(252, 172, 223);
+    padding: 10px;
+    text-align: center;
+}

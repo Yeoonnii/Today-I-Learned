@@ -1,9 +1,9 @@
 import { useContext, useRef, useState } from "react";
-import "./Editor.css"
-import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
+import "./Editor.css";
 
 const Editor = () => {
-  const { onCreate } = useContext(TodoContext);
+  const { onCreate } = useContext(TodoDispatchContext);
 
   const [content, setContent] = useState(""); // input 객체 값 저장을 위한 useState
   const contentRef = useRef();  // input 객체 포커싱을 위한 useRef

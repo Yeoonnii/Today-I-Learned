@@ -1,4 +1,4 @@
-import { createContext, useCallback, useReducer, useRef } from "react";
+import { createContext, useCallback, useMemo, useReducer, useRef } from "react";
 import "./App.css";
 import Editor from "./component/Editor";
 import Header from "./component/Header";
@@ -35,7 +35,12 @@ function reducer(state, action) {
 }
 
 // Context는 컴포넌트 외부에 생성한다. 컴포넌트 내부 생성시 리렌더링시 마다 생성되기 때문
-export const TodoContext = createContext();
+// export const TodoContext = createContext();
+
+//변화할 값의 Context
+export const TodoStateContext = createContext();
+//변화하지 않을 값의 Context
+export const TodoDispatchContext = createContext();
 
 function App() {
   // useReducer로 투두리스트 업데이트하기
@@ -75,20 +80,21 @@ function App() {
     });
   }, []); // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
 
+  // App 컴포넌트 리렌더링시 TodoDispatchContext의 인수로 전달한 value 객체가 재 생성되는 문제가 발생한다.
+  // useMemo를 사용하여 value 객체를 생성하여 전달하여 객체 내부 함수가 재 생성 되지 않도록 해준다.
+  const memoizedDispatch = useMemo(() => {
+    return {onCreate, onUpdateIsDone, onDeleteTodo}
+  }, [])
+
   return (
     <div className="App">
       <Header />
-      <TodoContext.Provider
-        value={{
-          todos,
-          onCreate,
-          onUpdateIsDone,
-          onDeleteTodo,
-        }}
-      >
-        <Editor />
-        <List />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }

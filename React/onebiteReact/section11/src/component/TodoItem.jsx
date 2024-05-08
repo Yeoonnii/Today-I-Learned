@@ -1,8 +1,8 @@
 import { memo, useContext } from "react";
+import { TodoDispatchContext } from "../App";
 import "./TodoItem.css";
-import { TodoContext } from "../App";
 const TodoItem = ({ id, isDone, content, date}) => {
-  const {onUpdateIsDone, onDeleteTodo} = useContext(TodoContext);
+  const {onUpdateIsDone, onDeleteTodo} = useContext(TodoDispatchContext);
   
   // input 태그의 checkbox 클릭시 실행될 함수
   const onChangeCheck = () => {

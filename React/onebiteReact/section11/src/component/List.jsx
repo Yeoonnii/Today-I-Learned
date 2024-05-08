@@ -1,9 +1,9 @@
 import { useContext, useMemo, useState } from "react";
+import { TodoStateContext } from "../App";
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { TodoContext } from "../App";
 const List = () => {
-  const { todos } = useContext(TodoContext);
+  const todos = useContext(TodoStateContext);
   // 검색어 입력을 위한 useState
   const [search, setSearch] = useState("");
 

@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useRef } from "react";
+import { createContext, useCallback, useReducer, useRef } from "react";
 import "./App.css";
 import Editor from "./component/Editor";
 import Header from "./component/Header";
@@ -24,13 +24,18 @@ function reducer(state, action) {
     case "CREATE":
       return [action.data, ...state];
     case "UPDATE":
-      return state.map((todo) => todo.id === action.targetId ? {...todo, isDone: !todo.isDone} : todo);
+      return state.map((todo) =>
+        todo.id === action.targetId ? { ...todo, isDone: !todo.isDone } : todo
+      );
     case "DELETE":
       return state.filter((todo) => todo.id !== action.targetId);
     default:
       break;
   }
 }
+
+// Context는 컴포넌트 외부에 생성한다. 컴포넌트 내부 생성시 리렌더링시 마다 생성되기 때문
+export const TodoContext = createContext();
 
 function App() {
   // useReducer로 투두리스트 업데이트하기
@@ -49,8 +54,8 @@ function App() {
         date: new Date().getTime(),
       },
     });
-  }, []);   // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
-  
+  }, []); // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
+
   // todos State 값들 중 targetId와 일치하는 id를 갖는 todo 아이템의 isDone 프로퍼티 변경
   // useCallback을 사용하여 App 컴포넌트가 리렌더링 될 때마다 함수를 새 메모리에 할당하지 않도록 최적화
   const onUpdateIsDone = useCallback((targetId) => {
@@ -58,27 +63,32 @@ function App() {
       type: "UPDATE",
       targetId: targetId,
     });
-  }, []);   // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
-  
+  }, []); // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
+
   // todos State 값들 중 targetId와 일치하는 id를 갖는 todo 아이템을 제외한 배열 객체 반환
   // useCallback을 사용하여 App 컴포넌트가 리렌더링 될 때마다 함수를 새 메모리에 할당하지 않도록 최적화
   const onDeleteTodo = useCallback((targetId) => {
     // // 인수 : todos의 배열중 id 와 일치하는 targetId
     dispatch({
       type: "DELETE",
-      targetId: targetId
-    })
-  }, []);   // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
+      targetId: targetId,
+    });
+  }, []); // 빈 배열을 명시하여 컴포넌트가 최초 렌더링 될때만 함수를 생성
 
   return (
     <div className="App">
       <Header />
-      <Editor onCreate={onCreate} />
-      <List
-        todos={todos}
-        onUpdateIsDone={onUpdateIsDone}
-        onDeleteTodo={onDeleteTodo}
-      />
+      <TodoContext.Provider
+        value={{
+          todos,
+          onCreate,
+          onUpdateIsDone,
+          onDeleteTodo,
+        }}
+      >
+        <Editor />
+        <List />
+      </TodoContext.Provider>
     </div>
   );
 }

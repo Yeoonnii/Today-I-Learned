@@ -1,7 +1,9 @@
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import "./List.css";
 import TodoItem from "./TodoItem";
-const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
+import { TodoContext } from "../App";
+const List = () => {
+  const { todos } = useContext(TodoContext);
   // 검색어 입력을 위한 useState
   const [search, setSearch] = useState("");
 
@@ -59,8 +61,6 @@ const List = ({ todos, onUpdateIsDone, onDeleteTodo }) => {
             <TodoItem
               key={todo.id}
               {...todo}
-              onUpdateIsDone={onUpdateIsDone}
-              onDeleteTodo={onDeleteTodo}
             />
           );
         })}

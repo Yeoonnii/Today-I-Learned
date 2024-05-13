@@ -40,7 +40,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
-        <Route path="/diary" element={<Diary />} />
+        {/* /:id   --> 사용할 파라미터를 명시 */}
+        <Route path="/diary/:id" element={<Diary />} />
         {/* 위의 모든 경로와 일치하지 않았을 때, *(와일드카드)의 element를 반환한다.  */}
         <Route path="*" element={<NotFound />} />
       </Routes>

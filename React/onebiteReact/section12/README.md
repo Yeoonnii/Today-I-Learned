@@ -238,3 +238,128 @@ export function getEmotionImage(emotionId) {
         <img src={getEmotionImage(4)} />
         <img src={getEmotionImage(5)} />
 ```
+
+<br>
+
+## ch07. 공통컴포넌트 구현하기 - 버튼, Header
+
+### 공통 버튼 컴포넌트 구현하기
+
+```jsx
+// Button.jsx
+// 부모의 props 를 전달받아 버튼 컴포넌트 생성
+const Button = ({ text, type, onClick }) => {
+  return (
+    <button className={`Button Button_${type}`} onClick={onClick}>
+      {text}
+    </button>
+  );
+};
+```
+
+```css
+// Button.css
+// 공통적으로 적용되는 button 컴포넌트
+.Button {
+    background-color: rgb(236, 236, 236);
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.Button_RED {
+    background-color: rgb(253, 86, 65);
+    color: white;
+}
+
+.Button_GREEN {
+    background-color: rgb(100, 201, 100);
+    color: white;
+}
+```
+
+```jsx
+// App.jsx
+// Button 컴포넌트 사용하기 
+<Button 
+      text={"버튼1"}
+      type={"DEFAULT"}
+      onClick={(() => {
+        console.log("버튼 1 클릭");
+      })}
+      />
+      <Button 
+      text={"버튼2"}
+      type={"GREEN"}
+      onClick={(() => {
+        console.log("버튼 2 클릭");
+      })}
+      />
+      <Button 
+      text={"버튼3"}
+      type={"RED"}
+      onClick={(() => {
+        console.log("버튼 3 클릭");
+      })}
+      />
+```
+
+### Header 컴포넌트 구현하기
+
+```jsx
+// Header.jsx
+const Header = ({ title, leftChild, rightChild }) => {
+  return (
+    <header className="Header">
+        <div className="header_left">{leftChild}</div>
+        <div className="header_center">{title}</div>
+        <div className="header_right">{rightChild}</div>
+    </header>
+  )
+}
+```
+
+```css
+// Header.css
+.Header {
+    display: flex;
+    align-items: center;
+
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.Header > div {
+    display: flex;
+}
+
+.Header .header_center {
+    width: 50%;
+    font-size: 25px;
+    justify-content: center;
+}
+
+.Header .header_left {
+    width: 25%;
+    font-size: 25px;
+    justify-content: flex-start;
+}
+
+.Header .header_right {
+    width: 25%;
+    font-size: 25px;
+    justify-content: flex-end;
+}
+```
+
+```jsx
+// App.jsx
+<Header 
+    title={"Header"}
+    leftChild={<Button text={"Left"} />}
+    rightChild={<Button text={"Right"} />}
+    />
+```

@@ -1,11 +1,12 @@
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 // import "./App.css";
+import Button from "./components/Button";
 import "./index.css";
+import Diary from "./pages/Diary";
 import Home from "./pages/Home";
 import New from "./pages/New";
-import Diary from "./pages/Diary";
 import NotFound from "./pages/NotFound";
-import {getEmotionImage} from "./util/get-emotion-image";
+import Header from "./components/Header";
 
 
 // 1. "/" : 모든일기를 조회하는 Home 페이지
@@ -24,31 +25,34 @@ import {getEmotionImage} from "./util/get-emotion-image";
   }
   return (
     <>
+    <Header 
+    title={"Header"}
+    leftChild={<Button text={"Left"} />}
+    rightChild={<Button text={"Right"} />}
+    />
     <div>
-      이미지 적용하기 : /src/assets
-        <br />
-        <img src={getEmotionImage(1)} />
-        <img src={getEmotionImage(2)} />
-        <img src={getEmotionImage(3)} />
-        <img src={getEmotionImage(4)} />
-        <img src={getEmotionImage(5)} />
-        <hr />
+      <Button 
+      text={"버튼1"}
+      type={"DEFAULT"}
+      onClick={(() => {
+        console.log("버튼 1 클릭");
+      })}
+      />
+      <Button 
+      text={"버튼2"}
+      type={"GREEN"}
+      onClick={(() => {
+        console.log("버튼 2 클릭");
+      })}
+      />
+      <Button 
+      text={"버튼3"}
+      type={"RED"}
+      onClick={(() => {
+        console.log("버튼 3 클릭");
+      })}
+      />
     </div>
-      <div>
-        Link 컴포넌트를 사용
-        <Link to={"/"}>Home</Link><br/>
-        <Link to={"/new"}>new</Link><br/>
-        <Link to={"/diary"}>diary</Link><br/>
-        <hr />
-        a 태그를 사용
-        <a href="/">Home</a><br/>
-        <a href="/new">new</a><br/>
-        <a href="/diary">diary</a><br/>
-        <hr />
-        <button onClick={handleNewPage}>new 페이지로 이동</button>
-        <hr />
-
-      </div>
       {/* // Routes 컴포넌트는 Switch 문 처럼 위에서 부터 아래로 내려오며 path와 */}
       {/* 일치하는 Route를 찾아 element에 명시된 컴포넌트를 반환한다. */}
       <Routes>

@@ -124,3 +124,117 @@ const New = () => {
 
 export default New
 ```
+
+### 폰트 적용하기
+
+1. 적용할 폰트를 프로젝트/public 폴더로 옮겨준다.
+2. 프로젝트/src/index.css 파일에 폰트 적용을 위한 css 코드를 작성해준다.
+3. App.jsx에 index.css 파일 적용을 위해 import 해준다.
+
+### 이미지를 적용하는 방법
+
+1. 이미지가 public 폴더에 위치한 경우
+
+```jsx
+function App() {
+	return(
+		<div>
+      이미지 적용하기 : /public<br/>
+        <img src="/emotion1.png" />
+        <img src="/emotion2.png" />
+        <img src="/emotion3.png" />
+        <img src="/emotion4.png" />
+        <img src="/emotion5.png" />
+        <br />
+        <hr />
+	</div>
+)}
+```
+
+<br>
+
+## ch06. 폰트, 이미지, 레이아웃 설정하기
+
+1. 이미지가 src/assets 폴더에 위치한 경우
+
+```jsx
+import emotion1 from "./assets/emotion1.png";
+import emotion2 from "./assets/emotion2.png";
+import emotion3 from "./assets/emotion3.png";
+import emotion4 from "./assets/emotion4.png";
+import emotion5 from "./assets/emotion5.png";
+
+function App() {
+	return(
+		<div>
+      이미지 적용하기 : /src/assets
+        <br />
+        <img src={emotion1} />
+        <img src={emotion2} />
+        <img src={emotion3} />
+        <img src={emotion4} />
+        <img src={emotion5} />
+        <hr />
+    </div>
+  );
+}
+```
+
+<br>
+
+### 이미지 최적화
+
+배포 후 프로젝트에서 이미지가 렌더링 되는 부분을 확인해보면 차이점이 존재한다.
+<img src="./img/img1.png">
+/public 의 이미지를 렌더링 하는 경우 src 경로명이 img 파일의 위치로 잡혀있지만, /src/assets의 이미지를 렌더링 하는 경우 내가 지정하지 않은 경로로 잡혀있다.
+
+위와같은 경로를 `DATA URI` 라고 하며 이미지 같은 데이터를 불러올 때 브라우저의 메모리에 데이터를 캐싱하여 새로고침하여도 데이터를 다시 불러오지 않도록 최적화가 된다.
+
+<img src="./img/img2.png">
+개발자 도구의 network 탭에서 확인해보면 일반 경로에서 불러온 이미지는 페이지가 렌더링 될 때마다 새로 데이터를 가져오고 있는걸 확인 할 수 있다.
+
+DATA URI 로 불러온 데이터는 memory cache 라고 적혀있으며 페이지 렌더링시 마다 새로 데이터를 불러오는것이 아닌 cache 된 데이터를 가져오고 있는것을 알 수 있다. 
+
+한번 불러온 이미지를 다시 불러오지 않기 위해 이미지를 최적화 하기 위해서는 코드상에서 import 문을 사용하여 cache 된 데이터를 가져오도록 해야 한다.
+
+하지만 불러와야 하는 이미지가 많은 경우 모든 데이터를 캐싱하여 저장하는것이 성능을 저하시킬 수 있기 때문에 이런 경우에는 경로에서 이미지를 가져오는 방식이 적합할 수 있다.
+
+데이터를 가져오는 방식은 상황에 맞게 최적화 해야 한다.
+
+<br>
+
+### 이미지를 불러오는 별도의 모듈 생성하기
+
+```jsx
+// get-emotion-image.js
+import emotion1 from "./../assets/emotion1.png";
+import emotion2 from "./../assets/emotion2.png";
+import emotion3 from "./../assets/emotion3.png";
+import emotion4 from "./../assets/emotion4.png";
+import emotion5 from "./../assets/emotion5.png";
+
+// 이미지 번호를 기준으로 이미지를 반환하는 함수
+export function getEmotionImage(emotionId) {
+  switch (emotionId) {
+    case 1:
+      return emotion1;
+    case 2:
+      return emotion2;
+    case 3:
+      return emotion3;
+    case 4:
+      return emotion4;
+    case 5:
+      return emotion5;
+    default:
+      return null;
+  }
+}
+
+// App.jsx
+        <img src={getEmotionImage(1)} />
+        <img src={getEmotionImage(2)} />
+        <img src={getEmotionImage(3)} />
+        <img src={getEmotionImage(4)} />
+        <img src={getEmotionImage(5)} />
+```

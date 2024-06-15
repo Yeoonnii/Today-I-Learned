@@ -62,17 +62,6 @@ function App() {
             onDelete,
           }}
         >
-          <button
-            onClick={() => onCreate(new Date().getTime(), 1, "Create Test")}
-          >
-            일기 추가 test
-          </button>
-          <button
-            onClick={() => onUpdate(1, new Date().getTime(), 3, "Update Diary")}
-          >
-            일기 수정 test
-          </button>
-          <button onClick={() => onDelete(2)}>일기 삭제 test</button>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<New />} />
